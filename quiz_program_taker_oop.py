@@ -7,11 +7,11 @@ class QuizGame:
         self.filename = filename
         self.questions = self.load_questions_from_file()
         self.score = 0 
-        
-    def load_questions_from_file(self, filename="quiz_questions.txt"):
+
+    def load_questions_from_file(self):
         questions = []
         try:
-            with open(filename, "r") as file:
+            with open(self.filename, "r") as file:
                 content = file.read().strip().split("---n")
                 for block in content:
                     lines = block.strip().split("\n")
