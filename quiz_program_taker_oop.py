@@ -34,38 +34,35 @@ class QuizGame:
             print("No quiz questions found. Make sure to run the quz_maker_game before running the program.")    
             return []
 
-def ask_question(question_data):
-    print("\n" + question_data["question"])
-    for key, option in question_data["options"].items():
-        print(f"{key}) {option}")
+    def ask_question(self, question_data):
+        print("\n" + question_data["question"])
+        for key, option in question_data["options"].items():
+            print(f"{key}) {option}")
 
-    user_answer = input("Your answer (a/b/c/d): ").lower()
-    while user_answer not in ['a', 'b', 'c', 'd']:
-        user_answer = input("Invalid answer. Please enter within the choices a/b/c/d: ").lower()
+        user_answer = input("Your answer (a/b/c/d): ").lower()
+        while user_answer not in ['a', 'b', 'c', 'd']:
+            user_answer = input("Invalid answer. Please enter within the choices a/b/c/d: ").lower()
 
-    if user_answer == question_data["answer"]:
-        print("Your answer is Correct!!")
-        return True
-    else:
-        correct_option = question_data["options"][question_data["answer"]]
-        print(f"Your answer is Wrong! The correct answer is: {question_data['answer']}){correct_option}")
-        return False 
+        if user_answer == question_data["answer"]:
+            print("Your answer is Correct!!")
+            return True
+        else:
+            correct_option = question_data["options"][question_data["answer"]]
+            print(f"Your answer is Wrong! The correct answer is: {question_data['answer']}){correct_option}")
+            return False 
     
 
-def run_quiz():
-    print("Welcome to the quiz game!")
-    saved_questions = load_questions_from_file()
+    def run(self):
+        print("Welcome to the quiz game!")
+        if not self.questions:
+            return
 
-    if not saved_questions:
-        return
+        random.shuffle(self.questions)
+        for question in self.questions:
+            if self.ask_question(question):
+                self.score += 1
 
-    random.shuffle(saved_questions)
-    score = 0
+        print(f"\nQuiz has been completed! Your score is {self.score} out of {len(self.saved_questions)}.")
 
-    for question in saved_questions:
-        if ask_question(question):
-            score += 1
-
-    print(f"\nQuiz has been completed! Your score is {score} out of {len(saved_questions)}.")
-
-run_quiz()
+quiz = QuizGame()
+quiz.run() 
